@@ -1,5 +1,6 @@
 export const rutes = {
- login: "/",
+ home: "/",
+ login: "/login",
  newAcount: "/nueva-cuenta",
  projects: "/proyectos",
  error404: "*",
