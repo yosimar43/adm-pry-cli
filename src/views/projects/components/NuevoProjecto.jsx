@@ -1,17 +1,29 @@
 import { useState, useContext } from "react";
 import { ProyectosContext } from "../../../context/projects/ProyectoStete";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const NuevoProjecto = () => {
  const [proyect, setProyect] = useState({
   proyectName: "",
+  tareasProyecto: [],
  });
+
+ const notify = () =>
+  toast.warn("El nombre no puede estar vacio ", {
+   position: "top-left",
+   autoClose: 5000,
+   hideProgressBar: false,
+   closeOnClick: true,
+   pauseOnHover: true,
+   draggable: true,
+   progress: undefined,
+  });
 
  const { showFormNewProject, showForm, agregarProjecto } =
   useContext(ProyectosContext);
 
  const { proyectName } = proyect;
-
- const [showMesaggeError, setShowMesaggeError] = useState(false);
 
  const handlerChange = event => {
   setProyect(state => ({
@@ -22,14 +34,14 @@ const NuevoProjecto = () => {
 
  const handlerSubmit = event => {
   event.preventDefault();
-  if (proyect.proyectName.trim() === "") return setShowMesaggeError(true);
-  setShowMesaggeError(false);
+  if (proyect.proyectName.trim() === "") return notify();
   agregarProjecto(proyect);
   setProyect({ proyectName: "" });
  };
 
  return (
   <>
+   <ToastContainer />
    <button
     type="buttom"
     className="btn btn-block btn-primario"
@@ -56,9 +68,6 @@ const NuevoProjecto = () => {
       value="Agregar proyectos"
      />
     </form>
-   )}
-   {showMesaggeError && (
-    <p className="">El Nombre de proyecto no puede estar en blanco</p>
    )}
   </>
  );

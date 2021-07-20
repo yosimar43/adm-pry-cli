@@ -2,6 +2,7 @@ import {
  AGREGAR_PROYECTO,
  FORMULARIO_PROYECTO,
  OBTENER_PROYECTOS,
+ PROYECTO_ACTUAL,
 } from "../../types";
 
 const proyectoReducer = (state, action) => {
@@ -11,6 +12,9 @@ const proyectoReducer = (state, action) => {
 
   case FORMULARIO_PROYECTO:
    return { ...state, showFormNewProject: true };
+
+  case PROYECTO_ACTUAL:
+   return { ...state, proyecto: action.payload };
 
   case AGREGAR_PROYECTO:
    return {

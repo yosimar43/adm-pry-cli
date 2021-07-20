@@ -5,21 +5,19 @@ import {
  AGREGAR_PROYECTO,
  FORMULARIO_PROYECTO,
  OBTENER_PROYECTOS,
+ PROYECTO_ACTUAL,
 } from "../../types";
 import proyectoReducer from "./proyectoReducer";
 
 export const ProyectosContext = createContext();
 
-const proyectos = [
- { id: 1, proyectName: "tienda virtual" },
- { id: 2, proyectName: "Intranet" },
- { id: 3, proyectName: "Diseño de sitio web" },
-];
+const proyectos = [];
 
 const ProyectoStete = props => {
  const initialState = {
   showFormNewProject: false,
   proyectos: [],
+  proyecto: null,
  };
 
  const [state, dispatch] = useReducer(proyectoReducer, initialState);
@@ -39,12 +37,17 @@ const ProyectoStete = props => {
   dispatch({ type: AGREGAR_PROYECTO, payload: project });
  };
 
+ const proyectoActual = proyecto =>
+  dispatch({ type: PROYECTO_ACTUAL, payload: proyecto });
+
  const contextData = {
   showFormNewProject: state.showFormNewProject,
   proyectos: state.proyectos,
+  proyecto: state.proyecto,
   showForm,
   getProjects,
   agregarProjecto,
+  proyectoActual,
  };
 
  return (

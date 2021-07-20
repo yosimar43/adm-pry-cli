@@ -388,4 +388,5 @@ aside {
 
 input:focus {
  outline: none;
+ border-right: #1a202d 3px solid;
 }

@@ -1,17 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { ProyectosContext } from "../../../context/projects/ProyectoStete";
 
 import Task from "./Task";
 
 const TaskList = () => {
- const proyectName = "Tienda virtual";
- const tareasProyecto = [
-  { taskName: "Crear pasarela de pago", complete: false, id: "1" },
-  { taskName: "Crear nav bar", complete: false, id: "2" },
-  { taskName: "Crear Error 404 page", complete: false, id: "3" },
- ];
+ const { proyecto } = useContext(ProyectosContext);
 
- const [task, setTasks] = useState(tareasProyecto);
+ const [task, setTasks] = useState([]);
 
  const reorder = (list, startIndex, endIndex) => {
   const result = [...list];
@@ -21,9 +17,15 @@ const TaskList = () => {
   return result;
  };
 
+ if (!proyecto) return <h2>Selecciona un proyecto</h2>;
+
  return (
   <>
-   <h2>Proyecto:{proyectName}</h2>
+   <h2>Proyecto: {proyecto.proyectName}</h2>
+
+   {proyecto.tareasProyecto.length === 0 ? (
+    <h2>Que bien no hay nada pendiente :)</h2>
+   ) : null}
 
    <DragDropContext
     onDragEnd={result => {
@@ -38,7 +40,11 @@ const TaskList = () => {
       return;
      }
 
-     setTasks(prevTasks => reorder(prevTasks, source.index, destination.index));
+     proyecto.tareasProyecto = reorder(
+      proyecto.tareasProyecto,
+      source.index,
+      destination.index
+     );
     }}
    >
     <Droppable droppableId="tasksList">
@@ -48,7 +54,7 @@ const TaskList = () => {
        ref={droppableProvided.innerRef}
        className="listado-tareas"
       >
-       {task.map((task, index) => (
+       {proyecto.tareasProyecto.map((task, index) => (
         <Draggable key={task.id} draggableId={task.id} index={index}>
          {draggableProvided => (
           <div
