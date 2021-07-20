@@ -14,15 +14,17 @@ const FormTareas = () => {
 
  const notifyErrorName = () =>
   toast.error("Deberias poner un texto mas descriptivo :)", {
-   position: "top-center",
+   position: "top-right",
    autoClose: 5000,
    hideProgressBar: false,
    closeOnClick: true,
    pauseOnHover: false,
    draggable: true,
    progress: undefined,
+   pauseOnFocusLoss: true,
+   limit: 1,
   });
-
+ const dismissAll = () => toast.dismiss();
  const handlerChange = event =>
   setTarea({
    ...tarea,
@@ -32,6 +34,7 @@ const FormTareas = () => {
  const handlerSubmit = event => {
   event.preventDefault();
   if (tarea.taskName.trim() === "") return notifyErrorName();
+  dismissAll();
   agregarTarea(tarea);
   setTarea({
    taskName: "",
@@ -43,7 +46,7 @@ const FormTareas = () => {
 
  return (
   <div className="formulario">
-   <ToastContainer />
+   <ToastContainer limit={1} />
    <form onSubmit={handlerSubmit}>
     <div className="contenedor-input">
      <input

@@ -5,6 +5,7 @@ import {
  AGREGAR_PROYECTO,
  AGREGAR_TAREA,
  ELIMINAR_PROYECTO,
+ ELIMINAR_TAREA,
  FORMULARIO_PROYECTO,
  OBTENER_PROYECTOS,
  PROYECTO_ACTUAL,
@@ -73,6 +74,9 @@ const ProyectoStete = props => {
   dispatch({ type: AGREGAR_TAREA, payload: tarea });
  };
 
+ const eliminarTarea = tareaId =>
+  dispatch({ type: ELIMINAR_TAREA, payload: tareaId });
+
  const contextData = {
   showFormNewProject: state.showFormNewProject,
   proyectos: state.proyectos,
@@ -83,6 +87,7 @@ const ProyectoStete = props => {
   proyectoActual,
   eliminarProyecto,
   agregarTarea,
+  eliminarTarea,
  };
 
  return (

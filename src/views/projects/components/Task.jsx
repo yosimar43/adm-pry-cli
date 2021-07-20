@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { ProyectosContext } from "../../../context/projects/ProyectoStete";
+
 const Task = ({ tarea }) => {
+ const { eliminarTarea } = useContext(ProyectosContext);
+
  const { taskName, complete } = tarea;
 
  return (
@@ -19,7 +24,11 @@ const Task = ({ tarea }) => {
     <button type="button" className="btn btn-primario">
      Editar
     </button>
-    <button type="button" className="btn btn-secundario">
+    <button
+     type="button"
+     className="btn btn-secundario"
+     onClick={() => eliminarTarea(tarea.id)}
+    >
      Eliminar
     </button>
    </div>

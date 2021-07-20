@@ -9,7 +9,7 @@ const ProyectsLists = () => {
   getProjects();
  }, []);
 
- if (proyectos.lenght === 0)
+ if (proyectos.length === 0)
   return <p>No hay proyectos, comienza creando uno </p>;
 
  return (

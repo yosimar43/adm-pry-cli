@@ -2,6 +2,7 @@ import {
  AGREGAR_PROYECTO,
  AGREGAR_TAREA,
  ELIMINAR_PROYECTO,
+ ELIMINAR_TAREA,
  FORMULARIO_PROYECTO,
  OBTENER_PROYECTOS,
  PROYECTO_ACTUAL,
@@ -42,6 +43,22 @@ const proyectoReducer = (state, action) => {
 
    prueba = [...prueba, projectupdate];
 
+   return {
+    ...state,
+    proyectos: prueba,
+    proyecto: projectupdate,
+   };
+  }
+  case ELIMINAR_TAREA: {
+   let projectupdate = {
+    ...state.proyecto,
+    tareasProyecto: state.proyecto.tareasProyecto.filter(
+     tarea => tarea.id !== action.payload
+    ),
+   };
+   let prueba = state.proyectos.filter(el => el.id !== projectupdate.id);
+
+   prueba = [...prueba, projectupdate];
    return {
     ...state,
     proyectos: prueba,
