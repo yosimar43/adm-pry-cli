@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import {
  AGREGAR_PROYECTO,
+ ELIMINAR_PROYECTO,
  FORMULARIO_PROYECTO,
  OBTENER_PROYECTOS,
  PROYECTO_ACTUAL,
@@ -34,11 +35,16 @@ const ProyectoStete = props => {
 
  const agregarProjecto = project => {
   project.id = uuidv4();
+  project.tareasProyecto = [];
+
   dispatch({ type: AGREGAR_PROYECTO, payload: project });
  };
 
  const proyectoActual = proyecto =>
   dispatch({ type: PROYECTO_ACTUAL, payload: proyecto });
+
+ const eliminarProyecto = proyectId =>
+  dispatch({ type: ELIMINAR_PROYECTO, payload: proyectId });
 
  const contextData = {
   showFormNewProject: state.showFormNewProject,
@@ -48,6 +54,7 @@ const ProyectoStete = props => {
   getProjects,
   agregarProjecto,
   proyectoActual,
+  eliminarProyecto,
  };
 
  return (

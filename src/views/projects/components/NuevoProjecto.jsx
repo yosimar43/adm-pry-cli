@@ -2,15 +2,15 @@ import { useState, useContext } from "react";
 import { ProyectosContext } from "../../../context/projects/ProyectoStete";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { isJSDocNamepathType } from "typescript";
 
 const NuevoProjecto = () => {
  const [proyect, setProyect] = useState({
   proyectName: "",
-  tareasProyecto: [],
  });
 
- const notify = () =>
-  toast.warn("El nombre no puede estar vacio ", {
+ const notifyErrorName = () =>
+  toast.error("El nombre no puede estar vacio ", {
    position: "top-left",
    autoClose: 5000,
    hideProgressBar: false,
@@ -20,10 +20,29 @@ const NuevoProjecto = () => {
    progress: undefined,
   });
 
- const { showFormNewProject, showForm, agregarProjecto } =
+ const notifyIsNotValid = () =>
+  toast.error("Ya tienes un projecto con este nombre", {
+   position: "top-left",
+   autoClose: 5000,
+   hideProgressBar: false,
+   closeOnClick: true,
+   pauseOnHover: true,
+   draggable: true,
+   progress: undefined,
+  });
+
+ const { showFormNewProject, showForm, agregarProjecto, proyectos } =
   useContext(ProyectosContext);
 
  const { proyectName } = proyect;
+
+ const isNameValid = proejctName => {
+  let isValid = true;
+  proyectos.forEach(el => {
+   if (el.proyectName === proejctName) isValid = false;
+  });
+  return isValid;
+ };
 
  const handlerChange = event => {
   setProyect(state => ({
@@ -34,7 +53,9 @@ const NuevoProjecto = () => {
 
  const handlerSubmit = event => {
   event.preventDefault();
-  if (proyect.proyectName.trim() === "") return notify();
+  if (proyect.proyectName.trim() === "") return notifyErrorName();
+  if (!isNameValid(proyect.proyectName)) return notifyIsNotValid();
+
   agregarProjecto(proyect);
   setProyect({ proyectName: "" });
  };

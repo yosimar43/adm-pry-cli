@@ -5,9 +5,7 @@ import { ProyectosContext } from "../../../context/projects/ProyectoStete";
 import Task from "./Task";
 
 const TaskList = () => {
- const { proyecto } = useContext(ProyectosContext);
-
- const [task, setTasks] = useState([]);
+ const { proyecto, eliminarProyecto } = useContext(ProyectosContext);
 
  const reorder = (list, startIndex, endIndex) => {
   const result = [...list];
@@ -74,7 +72,11 @@ const TaskList = () => {
    </DragDropContext>
 
    <div className="btn-container">
-    <button type="button" className="btn  btn-eliminar">
+    <button
+     type="button"
+     className="btn  btn-eliminar"
+     onClick={() => eliminarProyecto(proyecto.id)}
+    >
      Eliminar Proyecto &times;
     </button>
    </div>
