@@ -11,7 +11,6 @@ const formDefaultData = {
 
 const NewAcount = () => {
  const [newUser, setNewUser] = useState(formDefaultData);
- const [error, setEror] = useState({});
 
  const { name, email, password, confirm } = newUser;
 

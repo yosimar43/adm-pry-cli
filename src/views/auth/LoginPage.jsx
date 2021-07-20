@@ -9,7 +9,6 @@ const formDefaultData = {
 
 const LoginPage = () => {
  const [user, setUser] = useState(formDefaultData);
- const [error, setEror] = useState({});
 
  const { email, password } = user;
 

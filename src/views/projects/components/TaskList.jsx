@@ -1,7 +1,6 @@
-import { useContext, useState } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useContext } from "react";
 import { ProyectosContext } from "../../../context/projects/ProyectoStete";
-
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Task from "./Task";
 
 const TaskList = () => {
