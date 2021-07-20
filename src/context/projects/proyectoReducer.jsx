@@ -1,5 +1,6 @@
 import {
  AGREGAR_PROYECTO,
+ AGREGAR_TAREA,
  ELIMINAR_PROYECTO,
  FORMULARIO_PROYECTO,
  OBTENER_PROYECTOS,
@@ -32,6 +33,21 @@ const proyectoReducer = (state, action) => {
     ),
     proyecto: null,
    };
+
+  case AGREGAR_TAREA: {
+   let proyectoNewTask = [...state.proyecto.tareasProyecto, action.payload];
+   let projectupdate = { ...state.proyecto, tareasProyecto: proyectoNewTask };
+
+   let prueba = state.proyectos.filter(el => el.id !== projectupdate.id);
+
+   prueba = [...prueba, projectupdate];
+
+   return {
+    ...state,
+    proyectos: prueba,
+    proyecto: projectupdate,
+   };
+  }
 
   default:
    return state;

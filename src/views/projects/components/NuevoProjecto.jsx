@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import { ProyectosContext } from "../../../context/projects/ProyectoStete";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { isJSDocNamepathType } from "typescript";
 
 const NuevoProjecto = () => {
  const [proyect, setProyect] = useState({
