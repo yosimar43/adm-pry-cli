@@ -1,11 +1,25 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ProyectosContext } from "../context/projects/ProyectoStete";
 
 const FormTareas = () => {
  const proyectosContext = useContext(ProyectosContext);
- const { proyecto, agregarTarea } = proyectosContext;
+ const {
+  proyecto,
+  agregarTarea,
+  tarea: tareaActual,
+  actualizarTarea,
+ } = proyectosContext;
+
+ useEffect(() => {
+  tareaActual === null
+   ? setTarea({
+      taskName: "",
+      complete: false,
+     })
+   : setTarea(tareaActual);
+ }, [tareaActual]);
 
  const [tarea, setTarea] = useState({
   taskName: "",
@@ -25,6 +39,7 @@ const FormTareas = () => {
    limit: 1,
   });
  const dismissAll = () => toast.dismiss();
+
  const handlerChange = event =>
   setTarea({
    ...tarea,
@@ -35,11 +50,20 @@ const FormTareas = () => {
   event.preventDefault();
   if (tarea.taskName.trim() === "") return notifyErrorName();
   dismissAll();
-  agregarTarea(tarea);
-  setTarea({
-   taskName: "",
-   complete: false,
-  });
+
+  if (tareaActual === null) {
+   agregarTarea(tarea);
+   setTarea({
+    taskName: "",
+    complete: false,
+   });
+  } else {
+   actualizarTarea(tarea);
+   setTarea({
+    taskName: "",
+    complete: false,
+   });
+  }
  };
 
  if (!proyecto) return null;
@@ -63,7 +87,7 @@ const FormTareas = () => {
      <input
       type="submit"
       className="btn btn-block btn-primary btn-submit"
-      value="agregar tarea"
+      value={tareaActual ? "Editar tarea" : "agregar tarea"}
      />
     </div>
    </form>

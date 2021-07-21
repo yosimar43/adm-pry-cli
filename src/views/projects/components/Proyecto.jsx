@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { ProyectosContext } from "../../../context/projects/ProyectoStete";
 
 const Proyecto = ({ proyecto }) => {
- const { proyectoActual } = useContext(ProyectosContext);
+ const { proyectoActual, editarTarea } = useContext(ProyectosContext);
 
  const { proyectName } = proyecto;
  return (
@@ -10,7 +10,10 @@ const Proyecto = ({ proyecto }) => {
    <button
     type="button"
     className="btn btn-blank"
-    onClick={() => proyectoActual(proyecto)}
+    onClick={() => {
+     editarTarea(null);
+     proyectoActual(proyecto);
+    }}
    >
     {proyectName}
    </button>

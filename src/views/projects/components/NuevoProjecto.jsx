@@ -30,8 +30,13 @@ const NuevoProjecto = () => {
    progress: undefined,
   });
 
- const { showFormNewProject, showForm, agregarProjecto, proyectos } =
-  useContext(ProyectosContext);
+ const {
+  showFormNewProject,
+  showForm,
+  agregarProjecto,
+  proyectos,
+  editarTarea,
+ } = useContext(ProyectosContext);
 
  const { proyectName } = proyect;
 
@@ -56,6 +61,8 @@ const NuevoProjecto = () => {
   if (!isNameValid(proyect.proyectName)) return notifyIsNotValid();
 
   agregarProjecto(proyect);
+  editarTarea(null);
+
   setProyect({ proyectName: "" });
  };
 

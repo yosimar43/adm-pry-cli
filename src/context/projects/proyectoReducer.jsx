@@ -1,8 +1,11 @@
 import {
+ ACTUALIZAR_TAREA,
  AGREGAR_PROYECTO,
  AGREGAR_TAREA,
+ EDITAR_TAREA,
  ELIMINAR_PROYECTO,
  ELIMINAR_TAREA,
+ ESTADO_TAREA,
  FORMULARIO_PROYECTO,
  OBTENER_PROYECTOS,
  PROYECTO_ACTUAL,
@@ -39,13 +42,11 @@ const proyectoReducer = (state, action) => {
    let proyectoNewTask = [...state.proyecto.tareasProyecto, action.payload];
    let projectupdate = { ...state.proyecto, tareasProyecto: proyectoNewTask };
 
-   let prueba = state.proyectos.filter(el => el.id !== projectupdate.id);
-
-   prueba = [...prueba, projectupdate];
-
    return {
     ...state,
-    proyectos: prueba,
+    proyectos: state.proyectos.map(projecto =>
+     projecto.id === projectupdate.id ? projectupdate : projecto
+    ),
     proyecto: projectupdate,
    };
   }
@@ -56,13 +57,49 @@ const proyectoReducer = (state, action) => {
      tarea => tarea.id !== action.payload
     ),
    };
-   let prueba = state.proyectos.filter(el => el.id !== projectupdate.id);
 
-   prueba = [...prueba, projectupdate];
+   return {
+    ...state,
+    proyectos: state.proyectos.map(projecto =>
+     projecto.id === projectupdate.id ? projectupdate : projecto
+    ),
+    proyecto: projectupdate,
+   };
+  }
+  case ESTADO_TAREA: {
+   let proyectoActual = {
+    ...state.proyecto,
+    tareasProyecto: state.proyecto.tareasProyecto.map(tarea =>
+     tarea.id === action.payload.id ? action.payload : tarea
+    ),
+   };
+
+   let prueba = state.proyectos.filter(el => el.id !== proyectoActual.id);
+
+   prueba = [...prueba, proyectoActual];
    return {
     ...state,
     proyectos: prueba,
+    proyecto: proyectoActual,
+   };
+  }
+  case EDITAR_TAREA:
+   return { ...state, tarea: action.payload };
+
+  case ACTUALIZAR_TAREA: {
+   let proyectoNewTask = state.proyecto.tareasProyecto.map(tarea =>
+    tarea.id === action.payload.id ? action.payload : tarea
+   );
+   let projectupdate = { ...state.proyecto, tareasProyecto: proyectoNewTask };
+
+   console.log(proyectoNewTask);
+   return {
+    ...state,
+    proyectos: state.proyectos.map(projecto =>
+     projecto.id === projectupdate.id ? projectupdate : projecto
+    ),
     proyecto: projectupdate,
+    tarea: null,
    };
   }
 
